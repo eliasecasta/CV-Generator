@@ -38,7 +38,7 @@ const UserPreview = () => {
   };
 
   return (
-    <div className="mt-4">
+    <div className="pe-5">
       <h2>Preview</h2>
       <div
         ref={previewRef}

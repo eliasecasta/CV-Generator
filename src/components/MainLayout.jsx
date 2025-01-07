@@ -3,6 +3,7 @@ import UserGeneralInfo from './UserGeneralInfo';
 import UserJobInfo from './UserJobInfo';
 import UserEducationInfo from './UserEducationInfo';
 import UserPreview from './UserPreview';
+import '../styles/MainLayout.css'; // Import custom CSS for dark theme
 
 const MainLayout = () => {
   const [selectedComponent, setSelectedComponent] = useState('general');
@@ -21,31 +22,31 @@ const MainLayout = () => {
   };
 
   return (
-    <div className="container">
-      <div className="row mb-4">
-        <div className="col">
-          <button
-            className="btn btn-primary me-2"
-            onClick={() => setSelectedComponent('general')}
-          >
-            General Info
-          </button>
-          <button
-            className="btn btn-primary me-2"
-            onClick={() => setSelectedComponent('job')}
-          >
-            Job Info
-          </button>
-          <button
-            className="btn btn-primary"
-            onClick={() => setSelectedComponent('education')}
-          >
-            Education Info
-          </button>
-        </div>
-      </div>
+    <div className="container bg-dark text-light">
       <div className="row justify-content-between">
-        <div className="col-md-5">{renderSelectedComponent()}</div>
+        <div className="col-md-5">
+          <div className="d-flex justify-content-center mb-4">
+            <button
+              className="btn btn-secondary me-2"
+              onClick={() => setSelectedComponent('general')}
+            >
+              General Info
+            </button>
+            <button
+              className="btn btn-secondary me-2"
+              onClick={() => setSelectedComponent('job')}
+            >
+              Job Info
+            </button>
+            <button
+              className="btn btn-secondary"
+              onClick={() => setSelectedComponent('education')}
+            >
+              Education Info
+            </button>
+          </div>
+          {renderSelectedComponent()}
+        </div>
         <div className="col-md-5">
           <UserPreview />
         </div>

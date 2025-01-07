@@ -1,0 +1,32 @@
+body {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.container {
+  background-color: #1e1e1e;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.btn-secondary {
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.btn-secondary:hover {
+  background-color: #444444;
+  border-color: #444444;
+}
+
+.form-control {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #444444;
+}
+
+.form-control:focus {
+  background-color: #444444;
+  color: #ffffff;
+  border: 1px solid #555555;
+}
