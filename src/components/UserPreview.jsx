@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import '../styles/UserPreview.css'; // Import custom CSS for styling
 
 const UserPreview = () => {
   const user = useSelector((state) => state.user);
@@ -38,45 +39,51 @@ const UserPreview = () => {
   };
 
   return (
-    <div className="pe-5">
-      <h2>Preview</h2>
-      <div
-        ref={previewRef}
-        style={{ backgroundColor: '#fff', color: '#000', padding: '20px' }}
-      >
-        <p>
-          <strong>Name:</strong> {user.name}
-        </p>
-        <p>
-          <strong>Email:</strong> {user.email}
-        </p>
-        <p>
-          <strong>Phone:</strong> {user.phone}
-        </p>
-        <p>
-          <strong>Company Name:</strong> {user.companyName}
-        </p>
-        <p>
-          <strong>Position Title:</strong> {user.positionTitle}
-        </p>
-        <p>
-          <strong>Main Responsibilities:</strong> {user.mainResponsibilities}
-        </p>
-        <p>
-          <strong>Date From:</strong> {formatDate(user.dateFrom)}
-        </p>
-        <p>
-          <strong>Date Until:</strong> {formatDate(user.dateUntil)}
-        </p>
-        <p>
-          <strong>School Name:</strong> {user.school}
-        </p>
-        <p>
-          <strong>Title of Study:</strong> {user.titleOfStudy}
-        </p>
-        <p>
-          <strong>Date of Study:</strong> {formatDate(user.dateOfStudy)}
-        </p>
+    <div className="cv-container">
+      <h2 className="cv-title">Curriculum Vitae</h2>
+      <div ref={previewRef} className="cv-content">
+        <section className="cv-section">
+          <h3 className="cv-section-title">Personal Information</h3>
+          <p>
+            <strong>Name:</strong> {user.name}
+          </p>
+          <p>
+            <strong>Email:</strong> {user.email}
+          </p>
+          <p>
+            <strong>Phone:</strong> {user.phone}
+          </p>
+        </section>
+        <section className="cv-section">
+          <h3 className="cv-section-title">Job Information</h3>
+          <p>
+            <strong>Company Name:</strong> {user.companyName}
+          </p>
+          <p>
+            <strong>Position Title:</strong> {user.positionTitle}
+          </p>
+          <p>
+            <strong>Main Responsibilities:</strong> {user.mainResponsibilities}
+          </p>
+          <p>
+            <strong>Date From:</strong> {formatDate(user.dateFrom)}
+          </p>
+          <p>
+            <strong>Date Until:</strong> {formatDate(user.dateUntil)}
+          </p>
+        </section>
+        <section className="cv-section">
+          <h3 className="cv-section-title">Education Information</h3>
+          <p>
+            <strong>School Name:</strong> {user.school}
+          </p>
+          <p>
+            <strong>Title of Study:</strong> {user.titleOfStudy}
+          </p>
+          <p>
+            <strong>Date of Study:</strong> {formatDate(user.dateOfStudy)}
+          </p>
+        </section>
       </div>
       <button className="btn btn-primary mt-4" onClick={handleDownloadPDF}>
         Download PDF
