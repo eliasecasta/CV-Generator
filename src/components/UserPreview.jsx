@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
@@ -21,16 +21,21 @@ const UserPreview = () => {
       const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
+      const padding = 10;
       const imgWidth = canvas.width;
       const imgHeight = canvas.height;
-      const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-      const imgX = (pdfWidth - imgWidth * ratio) / 2;
-      const imgY = (pdfHeight - imgHeight * ratio) / 2;
+      const ratio = Math.min(
+        (pdfWidth - 2 * padding) / imgWidth,
+        (pdfHeight - 2 * padding) / imgHeight,
+      );
+      const imgX = padding;
+      const imgY = padding;
+      pdf.text('Curriculum Vitae', pdfWidth / 2, padding, { align: 'center' });
       pdf.addImage(
         imgData,
         'PNG',
         imgX,
-        imgY,
+        imgY + 10, // Adjust for title
         imgWidth * ratio,
         imgHeight * ratio,
       );
