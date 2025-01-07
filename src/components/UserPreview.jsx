@@ -1,8 +1,14 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import '../styles/UserPreview.css'; // Import custom CSS for styling
+import {
+  PDFDownloadLink,
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+} from '@react-pdf/renderer';
+import '../styles/UserPreview.css';
 
 const UserPreview = () => {
   const user = useSelector((state) => state.user);
@@ -14,34 +20,80 @@ const UserPreview = () => {
     return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
   };
 
-  const handleDownloadPDF = () => {
-    const input = previewRef.current;
-    html2canvas(input, { scale: 2 }).then((canvas) => {
-      const imgData = canvas.toDataURL('image/png');
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const padding = 10;
-      const imgWidth = canvas.width;
-      const imgHeight = canvas.height;
-      const ratio = Math.min(
-        (pdfWidth - 2 * padding) / imgWidth,
-        (pdfHeight - 2 * padding) / imgHeight,
-      );
-      const imgX = padding;
-      const imgY = padding;
-      pdf.text('Curriculum Vitae', pdfWidth / 2, padding, { align: 'center' });
-      pdf.addImage(
-        imgData,
-        'PNG',
-        imgX,
-        imgY + 10, // Adjust for title
-        imgWidth * ratio,
-        imgHeight * ratio,
-      );
-      pdf.save('user-preview.pdf');
-    });
-  };
+  const styles = StyleSheet.create({
+    page: {
+      padding: 20,
+    },
+    section: {
+      marginBottom: 10,
+    },
+    title: {
+      fontSize: 24,
+      textAlign: 'center',
+      marginBottom: 20,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      marginBottom: 10,
+      borderBottom: 1,
+      borderBottomColor: '#000',
+      paddingBottom: 5,
+    },
+    text: {
+      fontSize: 12,
+      marginBottom: 5,
+    },
+  });
+
+  const MyDocument = () => (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        <Text style={styles.title}>Curriculum Vitae</Text>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Personal Information</Text>
+          <Text style={styles.text}>
+            <strong>Name:</strong> {user.name}
+          </Text>
+          <Text style={styles.text}>
+            <strong>Email:</strong> {user.email}
+          </Text>
+          <Text style={styles.text}>
+            <strong>Phone:</strong> {user.phone}
+          </Text>
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Job Information</Text>
+          <Text style={styles.text}>
+            <strong>Company Name:</strong> {user.companyName}
+          </Text>
+          <Text style={styles.text}>
+            <strong>Position Title:</strong> {user.positionTitle}
+          </Text>
+          <Text style={styles.text}>
+            <strong>Main Responsibilities:</strong> {user.mainResponsibilities}
+          </Text>
+          <Text style={styles.text}>
+            <strong>Date From:</strong> {formatDate(user.dateFrom)}
+          </Text>
+          <Text style={styles.text}>
+            <strong>Date Until:</strong> {formatDate(user.dateUntil)}
+          </Text>
+        </View>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>Education Information</Text>
+          <Text style={styles.text}>
+            <strong>School Name:</strong> {user.school}
+          </Text>
+          <Text style={styles.text}>
+            <strong>Title of Study:</strong> {user.titleOfStudy}
+          </Text>
+          <Text style={styles.text}>
+            <strong>Date of Study:</strong> {formatDate(user.dateOfStudy)}
+          </Text>
+        </View>
+      </Page>
+    </Document>
+  );
 
   return (
     <div className="cv-container">
@@ -90,9 +142,13 @@ const UserPreview = () => {
           </p>
         </section>
       </div>
-      <button className="btn btn-primary mt-4" onClick={handleDownloadPDF}>
-        Download PDF
-      </button>
+      <PDFDownloadLink document={<MyDocument />} fileName="user-preview.pdf">
+        {({ loading }) => (
+          <button className="btn btn-primary mt-4">
+            {loading ? 'Loading document...' : 'Download PDF'}
+          </button>
+        )}
+      </PDFDownloadLink>
     </div>
   );
 };
