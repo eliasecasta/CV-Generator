@@ -14,6 +14,20 @@ const initialState = {
   dateOfStudy: '2015-01-01T00:00:00.000Z',
 };
 
+const emptyState = {
+  name: '',
+  email: '',
+  phone: '',
+  companyName: '',
+  positionTitle: '',
+  mainResponsibilities: '',
+  dateFrom: '',
+  dateUntil: '',
+  school: '',
+  titleOfStudy: '',
+  dateOfStudy: '',
+};
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -21,8 +35,10 @@ const userSlice = createSlice({
     setUserInfo: (state, action) => {
       return { ...state, ...action.payload };
     },
+    resetUserInfo: () => initialState,
+    clearUserInfo: () => emptyState,
   },
 });
 
-export const { setUserInfo } = userSlice.actions;
+export const { setUserInfo, resetUserInfo, clearUserInfo } = userSlice.actions;
 export default userSlice.reducer;
