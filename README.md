@@ -59,21 +59,20 @@ src/
 └── index.js
 
 ## Components
+**MainLayout**: The main layout of the application, including navigation buttons and the preview section.  
+**UserGeneralInfo**: Form for entering personal information.  
+**UserJobInfo**: Form for entering job information.  
+**UserEducationInfo**: Form for entering education information.  
+**UserPreview**: Component for previewing the CV and generating the PDF.
 
-MainLayout: The main layout of the application, including navigation buttons and the preview section.
-UserGeneralInfo: Form for entering personal information.
-UserJobInfo: Form for entering job information.
-UserEducationInfo: Form for entering education information.
-UserPreview: Component for previewing the CV and generating the PDF.
+## **Redux Store**
 
-## Redux Store
+**userSlice.js**: Contains the Redux slice for managing user information, including actions for setting, resetting, and clearing user info.
 
-userSlice.js: Contains the Redux slice for managing user information, including actions for setting, resetting, and clearing user info.
+## **Styling**
 
-## Styling
-
-MainLayout.css: Custom CSS for the main layout.
-UserPreview.css: Custom CSS for the CV preview.
+**MainLayout.css**: Custom CSS for the main layout.  
+**UserPreview.css**: Custom CSS for the CV preview.
 
 ## License
 
